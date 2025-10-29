@@ -39,10 +39,9 @@ palavra1 palavra2 palavra3
 
 ## Características
 
-- Normalização automática para minúsculas
 - Mantém acentuação das palavras
 - Exibe resultados com Ranking, Título, Autores, Resumo, Palavras Chaves, Link, Filiação e Relevância
-- Botão "Ver Detalhes" mostra termos, TF e IDF de cada artigo
+- Botão "Ver Detalhes" mostra termos, frequência, TF e IDF de cada artigo
 
 ## Requisitos
 
@@ -91,7 +90,7 @@ python interface_busca.py
 2. Selecione o tipo de busca (Booleana ou Vetorial)
 3. Clique em "Pesquisar"
 4. Visualize os resultados na tabela
-5. Selecione um artigo e clique em "Ver Detalhes" para ver os termos, TF e IDF
+5. Selecione um artigo e clique em "Ver Detalhes" para ver os termos, frequência , TF e IDF
 6. Clique duas vezes no artigo e será direcionado para o arquivo
 
 ## Detalhes Técnicos
@@ -111,5 +110,5 @@ python interface_busca.py
 ### Janela de Detalhes
 
 - GROUP BY por artigo
-- Exibe: termo, tf_logaritimo, idf_logaritimo
+- Exibe: termo, frequência, tf_logaritimo e idf_logaritimo
 - Dados da tabela Documentos com JOIN em Dicionario
