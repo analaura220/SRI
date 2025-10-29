@@ -10,7 +10,7 @@ class SistemaBuscaSRI:
     def __init__(self, root):
         self.root = root
         self.root.title("Sistema de Recuperação de Informação")
-        self.root.geometry("1400x700")  # Aumentado para acomodar mais colunas
+        self.root.geometry("1400x700")
         
         # Configuração do banco de dados
         self.db_config = {
@@ -116,7 +116,7 @@ class SistemaBuscaSRI:
         self.tree.bind("<Button-1>", self.ao_clicar)
         
     def conectar_bd(self):
-        """Estabelece conexão com o banco de dados"""
+        # Estabelece conexão com o banco de dados
         try:
             return mysql.connector.connect(**self.db_config)
         except mysql.connector.Error as err:
@@ -124,7 +124,7 @@ class SistemaBuscaSRI:
             return None
     
     def processar_consulta_booleana(self, consulta: str) -> Tuple[List[str], List[str]]:
-        """Processa a consulta booleana separando palavras e operadores"""
+        # Processa a consulta booleana separando palavras e operadores
         consulta = consulta.lower()
         
         # Divide a consulta em tokens
@@ -142,7 +142,7 @@ class SistemaBuscaSRI:
         return palavras, operadores
     
     def processar_consulta_vetorial(self, consulta: str) -> List[str]:
-        """Processa a consulta vetorial removendo vírgulas"""
+        # Processa a consulta vetorial removendo vírgulas
         consulta = consulta.lower()
         # Remove vírgulas e divide em palavras
         consulta = consulta.replace(',', ' ')
@@ -150,7 +150,7 @@ class SistemaBuscaSRI:
         return [p.strip() for p in palavras if p.strip()]
     
     def buscar_artigos_por_termo(self, termo: str) -> Set[int]:
-        """Busca artigos que contêm um termo específico"""
+        # Busca artigos que contêm um termo específico
         conn = self.conectar_bd()
         if not conn:
             return set()
@@ -171,7 +171,7 @@ class SistemaBuscaSRI:
             conn.close()
     
     def calcular_relevancia(self, id_artigo: int, palavras: List[str]) -> float:
-        """Calcula a relevância de um artigo baseado nos termos buscados usando TF-IDF"""
+        # Calcula a relevância de um artigo baseado nos termos buscados usando TF-IDF
         conn = self.conectar_bd()
         if not conn:
             return 0.0
@@ -199,7 +199,7 @@ class SistemaBuscaSRI:
             conn.close()
     
     def executar_busca_booleana(self, palavras: List[str], operadores: List[str]) -> Set[int]:
-        """Executa busca booleana processando operadores da esquerda para direita"""
+        # Executa busca booleana processando operadores da esquerda para direita
         if not palavras:
             return set()
         
@@ -221,7 +221,7 @@ class SistemaBuscaSRI:
         return resultado
     
     def executar_busca_vetorial(self, palavras: List[str]) -> Set[int]:
-        """Executa busca vetorial usando união de todos os termos"""
+        #Executa busca vetorial usando união de todos os termos
         resultado = set()
         
         for palavra in palavras:
@@ -231,7 +231,7 @@ class SistemaBuscaSRI:
         return resultado
     
     def obter_dados_artigos(self, ids_artigos: Set[int], palavras: List[str] = None) -> List[Tuple]:
-        """Obtém dados completos dos artigos com join de autores, ordenados por relevância"""
+        # Obtém dados completos dos artigos com join de autores, ordenados por relevância
         if not ids_artigos:
             return []
         
@@ -293,7 +293,7 @@ class SistemaBuscaSRI:
             conn.close()
     
     def executar_busca(self):
-        """Executa a busca baseada no tipo selecionado"""
+        # Executa a busca baseada no tipo selecionado
         consulta = self.entrada_busca.get().strip()
         
         if not consulta:
@@ -344,10 +344,10 @@ class SistemaBuscaSRI:
                 f"{score:.4f}"
             ), tags=(str(id_artigo),))
         
-        messagebox.showinfo("Resultado", f"{len(resultados)} artigo(s) encontrado(s).\nOrdenados por relevância (mais relevante primeiro).")
+        messagebox.showinfo("Resultado", f"{len(resultados)} artigo(s) encontrado(s).")
     
     def ao_clicar(self, event):
-        """Detecta clique em uma célula"""
+        # Detecta clique em uma célula
         region = self.tree.identify_region(event.x, event.y)
         if region != "cell":
             return
@@ -360,7 +360,7 @@ class SistemaBuscaSRI:
             self.tree.config(cursor="")
     
     def ao_duplo_clique(self, event):
-        """Abre o link quando duplo clique na coluna Link"""
+        # Abre o link quando duplo clique na coluna Link
         region = self.tree.identify_region(event.x, event.y)
         if region != "cell":
             return
@@ -384,7 +384,7 @@ class SistemaBuscaSRI:
                     messagebox.showerror("Erro", f"Não foi possível abrir o link: {e}")
     
     def mostrar_detalhes(self):
-        """Mostra os detalhes do artigo selecionado"""
+        # Mostra os detalhes do artigo selecionado
         selecionado = self.tree.selection()
         
         if not selecionado:
@@ -409,16 +409,18 @@ class SistemaBuscaSRI:
                  font=('Arial', 12, 'bold')).pack(pady=10)
         
         # Tabela de termos
-        tree_detalhes = ttk.Treeview(frame, columns=("Termo", "TF", "IDF"), 
+        tree_detalhes = ttk.Treeview(frame, columns=("Termo", "Frequencia", "TF", "IDF"), 
                                      show="headings", height=20)
         
         tree_detalhes.heading("Termo", text="Termo")
+        tree_detalhes.heading("Frequencia", text="Frequência")
         tree_detalhes.heading("TF", text="TF (log)")
         tree_detalhes.heading("IDF", text="IDF (log)")
         
-        tree_detalhes.column("Termo", width=400)
-        tree_detalhes.column("TF", width=150)
-        tree_detalhes.column("IDF", width=150)
+        tree_detalhes.column("Termo", width=320)
+        tree_detalhes.column("Frequencia", width=120)
+        tree_detalhes.column("TF", width=120)
+        tree_detalhes.column("IDF", width=120)
         
         # Scrollbar
         scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=tree_detalhes.yview)
@@ -437,6 +439,7 @@ class SistemaBuscaSRI:
             query = """
                 SELECT 
                     dic.termo,
+                    d.frequencia_do_termo,
                     d.tf_logaritimo,
                     d.idf_logaritimo
                 FROM documentos d
@@ -448,10 +451,24 @@ class SistemaBuscaSRI:
             resultados = cursor.fetchall()
             
             for row in resultados:
+                termo = row[0]
+                frequencia = row[1]
+                tf_log = row[2]
+                idf_log = row[3]
+
+                # Formata a frequência (TF, IDF, TF-IDF): se for inteiro aparente, mostra sem casas; senão mostra 4 casas
+                if frequencia is None:
+                    freq_str = "0"
+                elif float(frequencia).is_integer():
+                    freq_str = f"{int(frequencia)}"
+                else:
+                    freq_str = f"{frequencia:.4f}"
+
                 tree_detalhes.insert("", tk.END, values=(
-                    row[0],
-                    f"{row[1]:.4f}",
-                    f"{row[2]:.4f}"
+                    termo,
+                    freq_str,
+                    f"{tf_log:.4f}",
+                    f"{idf_log:.4f}"
                 ))
         finally:
             cursor.close()

@@ -16,31 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `autores`
+-- Table structure for table `documentos`
 --
 
-DROP TABLE IF EXISTS `autores`;
+DROP TABLE IF EXISTS `documentos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `autores` (
+CREATE TABLE `documentos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_artigo` int NOT NULL,
-  `nome` varchar(300) NOT NULL,
-  `ordem` int NOT NULL,
+  `id_termo` int NOT NULL,
+  `frequencia_do_termo` float NOT NULL,
+  `tf_logaritimo` float NOT NULL,
+  `idf_logaritimo` float NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_artigo` (`id_artigo`),
-  CONSTRAINT `autores_ibfk_1` FOREIGN KEY (`id_artigo`) REFERENCES `artigos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_termo` (`id_termo`),
+  CONSTRAINT `documentos_ibfk_1` FOREIGN KEY (`id_artigo`) REFERENCES `artigos` (`id`),
+  CONSTRAINT `documentos_ibfk_2` FOREIGN KEY (`id_termo`) REFERENCES `dicionario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `autores`
+-- Dumping data for table `documentos`
 --
 
-LOCK TABLES `autores` WRITE;
-/*!40000 ALTER TABLE `autores` DISABLE KEYS */;
-INSERT INTO `autores` VALUES (21,1,'joão silva santos',1),(22,1,'maria oliveira costa',2),(23,2,'pedro henrique souza',1),(24,2,'ana paula ferreira',2),(25,2,'carlos eduardo lima',3),(26,3,'fernanda alves rodrigues',1),(27,3,'roberto carlos mendes',2),(28,4,'juliana martins pereira',1),(29,5,'ricardo gomes almeida',1),(30,5,'camila sousa barbosa',2),(31,1,'joão silva santos',1),(32,1,'maria oliveira costa',2),(33,2,'pedro henrique souza',1),(34,2,'ana paula ferreira',2),(35,2,'carlos eduardo lima',3),(36,3,'fernanda alves rodrigues',1),(37,3,'roberto carlos mendes',2),(38,4,'juliana martins pereira',1),(39,5,'ricardo gomes almeida',1),(40,5,'camila sousa barbosa',2);
-/*!40000 ALTER TABLE `autores` ENABLE KEYS */;
+LOCK TABLES `documentos` WRITE;
+/*!40000 ALTER TABLE `documentos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `documentos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-27 21:22:41
+-- Dump completed on 2025-10-28 22:08:05

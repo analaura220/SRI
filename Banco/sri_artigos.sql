@@ -30,7 +30,7 @@ CREATE TABLE `artigos` (
   `palavras_chaves` varchar(500) NOT NULL,
   `link` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,6 @@ CREATE TABLE `artigos` (
 
 LOCK TABLES `artigos` WRITE;
 /*!40000 ALTER TABLE `artigos` DISABLE KEYS */;
-INSERT INTO `artigos` VALUES (1,'aprendizado de máquina em análise de dados','universidade federal de minas gerais','este artigo apresenta técnicas de aprendizado de máquina aplicadas à análise de grandes volumes de dados utilizando algoritmos de classificação e regressão','aprendizado, máquina, dados, algoritmos','http://artigos.com/ml-analise-dados'),(2,'redes neurais artificiais para reconhecimento de padrões','universidade de são paulo','estudo sobre redes neurais profundas aplicadas ao reconhecimento de padrões em imagens utilizando arquiteturas convolucionais','redes, neurais, padrões, imagens, convolucional','http://artigos.com/redes-neurais'),(3,'processamento de linguagem natural com transformers','universidade estadual de campinas','análise de modelos transformers para processamento de linguagem natural incluindo bert e gpt aplicados a tarefas de classificação de texto','linguagem, natural, transformers, bert, texto','http://artigos.com/pln-transformers'),(4,'algoritmos de busca e recuperação de informação','pontifícia universidade católica','revisão de algoritmos clássicos de recuperação de informação incluindo modelos booleanos e vetoriais para sistemas de busca','busca, recuperação, informação, booleano, vetorial','http://artigos.com/recuperacao-info'),(5,'análise de sentimentos em redes sociais','universidade federal do rio de janeiro','técnicas de análise de sentimentos aplicadas a dados de redes sociais utilizando aprendizado de máquina e processamento de linguagem natural','sentimentos, redes, sociais, análise, dados','http://artigos.com/analise-sentimentos');
 /*!40000 ALTER TABLE `artigos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-27 21:22:41
+-- Dump completed on 2025-10-28 22:08:05
